@@ -1,19 +1,33 @@
-import * as React from 'react';
-import Cell from './Cell/Cell';
+import * as React from "react";
+import styled from "styled-components";
+import boardData from "../board-data";
+import Cell from "./Cell/Cell";
 
 const Board = (): JSX.Element => {
-    const test = [];
-    for (let i = 0; i < 10; i++) {
-        test.push(i.toString());
-    }
-
-    return (
-        <React.Fragment>
-            {test.map(el => {
-                return <Cell key={el} id={el} />;
-            })}
-        </React.Fragment>
-    );
+  return (
+    <StyledBoard>
+      {boardData.map((row: string[][], rowKey: number) => {
+        return row.map((cell: string[], cellKey: number) => {
+          return (
+            <Cell
+              key={`${rowKey}-${cellKey}`}
+              isTrap={cell.includes("trap")}
+              isUser={cell.includes("user")}
+              isCandy={cell.includes("candy")}
+              isDeath={cell.includes("death")}
+            />
+          );
+        });
+      })}
+    </StyledBoard>
+  );
 };
+
+const StyledBoard = styled.div`
+  background-color: yellow;
+  border: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+`;
 
 export default Board;
