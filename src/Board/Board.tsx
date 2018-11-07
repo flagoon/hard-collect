@@ -28,6 +28,7 @@ const StyledBoard = styled.div`
   border: 1px solid black;
   display: flex;
   flex-wrap: wrap;
+  width: 700px;
 `;
 
 export default Board;

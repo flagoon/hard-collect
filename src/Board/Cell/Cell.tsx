@@ -25,13 +25,14 @@ const Cell: React.SFC<IProps> = props => {
 };
 
 const StyledCell = styled.div`
+  box-sizing: border-box;
+  border: 1px solid black;
   display: flex;
   flex-grow: 1;
-  width: 12%;
-  height: 4rem;
+  width: 70px;
+  height: 70px;
   justify-content: center;
   align-items: center;
-  border: 1px solid red;
   color: ${(props: IProps) => (props.isDeath ? "white" : "black")}
   background-color: ${(props: IProps) =>
     props.isTrap
@@ -42,7 +43,7 @@ const StyledCell = styled.div`
           ? "black"
           : props.isCandy
             ? "pink"
-            : "white"};
+            : "#BBB"};
 `;
 
 export default Cell;
