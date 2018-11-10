@@ -9,13 +9,7 @@ const Board = (): JSX.Element => {
       {boardData.map((row: string[][], rowKey: number) => {
         return row.map((cell: string[], cellKey: number) => {
           return (
-            <Cell
-              key={`${rowKey}-${cellKey}`}
-              isTrap={cell.includes("trap")}
-              isUser={cell.includes("user")}
-              isCandy={cell.includes("candy")}
-              isDeath={cell.includes("death")}
-            />
+            <Cell key={`${rowKey}-${cellKey}`} cellType={cell[0]} size="60px" />
           );
         });
       })}
