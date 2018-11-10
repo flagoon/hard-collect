@@ -5,10 +5,10 @@ import Candy from "./Candy/Candy";
 const Legend = () => {
   return (
     <LegendContainer>
-      <div>
+      <LegendItem>
         <Candy />
         <span>Death</span>
-      </div>
+      </LegendItem>
     </LegendContainer>
   );
 };
@@ -18,6 +18,11 @@ const LegendContainer = styled.div`
   border: 1px solid black;
   padding: 10px;
   margin: 0 10px 0 10px;
+`;
+
+const LegendItem = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export default Legend;
