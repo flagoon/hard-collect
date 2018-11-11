@@ -1,9 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
-import boardData from "../board-data";
 import Cell from "./Cell/Cell";
 
-const Board = (): JSX.Element => {
+const Board = ({ boardData }: any): JSX.Element => {
   return (
     <StyledBoard>
       {boardData.map((row: string[][], rowKey: number) => {

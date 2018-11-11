@@ -1,33 +1,65 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import boardData from "./board-data";
 import Board from "./Board/Board";
 import Legend from "./Legend/Legend";
 
-class App extends Component {
+interface IState {
+  userPos: {
+    x: number;
+    y: number;
+  };
+  board: string[][][];
+}
+
+class App extends Component<{}, IState> {
+  private boardRef = React.createRef<HTMLDivElement>();
+
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      board: boardData,
+      userPos: {
+        x: 5,
+        y: 5
+      }
+    };
+  }
+
   public render() {
     return (
-      <React.Fragment>
+      <div
+        onKeyDown={this.onKeyDownHandler}
+        tabIndex={0}
+        ref={this.boardRef}
+        style={{ outline: "none", height: "100vh" }}
+      >
         <MainContainer>
-          <Board />
+          <Board boardData={this.state.board} />
           <Legend />
         </MainContainer>
-      </React.Fragment>
+      </div>
     );
   }
+
+  public componentDidMount() {
+    this.boardRef.current!.focus();
+  }
+
+  public onKeyDownHandler = (e: React.KeyboardEvent) => {
+    if (e.key !== "F12") {
+      e.preventDefault();
+      console.log(e.key); // tslint:disable-line
+    }
+  };
 }
 
 const MainContainer = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const IconFooter = styled.div`
-  border: 1px solid red;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  bottom: 1rem;
+  div:focus {
+    border: none;
+  }
 `;
 
 export default App;
