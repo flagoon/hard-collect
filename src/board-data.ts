@@ -1,14 +1,17 @@
-import { Set } from "immutable";
+const generateIcon = (): string => {
+  const possibleIcons = ["candy", "death", "trap", ""];
+  const rand: number = Math.floor(Math.random() * 4);
+  return possibleIcons[rand];
+};
 
-const boardData: string[][][] = [
-  [["candy"], [], ["trap"], [], ["death"], [], ["death"], ["candy"], [], []],
-  [[], ["candy"], [], ["trap"], [], [], [], ["candy"], [], []],
-  [["candy"], [], ["death"], [], [], [], ["trap"], ["trap"], [], ["trap"]],
-  [[], [], [], [], ["user"], [], [], [], [], []],
-  [["trap"], [], [], [], [], [], [], [], [], []],
-  [["trap"], [], ["candy"], [], ["candy", "trap"], [], [], ["trap"], [], []],
-  [[], ["trap"], [], ["death"], [], [], [], [], [], []],
-  [[], [], ["candy"], [], ["trap"], [], [], ["candy"], [], ["candy"]]
-];
+const hardBoard: string[][] = [];
+for (let i = 0; i < 10; i++) {
+  const row: string[] = [];
+  for (let j = 0; j < 10; j++) {
+    const icon: string = i === 5 && j === 5 ? "user" : generateIcon();
+    row.push(icon);
+  }
+  hardBoard.push(row);
+}
 
-export default boardData;
+export { hardBoard };

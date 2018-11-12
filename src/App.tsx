@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import boardData from "./board-data";
+import { hardBoard } from "./board-data";
 import Board from "./Board/Board";
 import Legend from "./Legend/Legend";
 
@@ -9,7 +9,7 @@ interface IState {
     x: number;
     y: number;
   };
-  board: string[][][];
+  board: string[][];
 }
 
 class App extends Component<{}, IState> {
@@ -18,7 +18,7 @@ class App extends Component<{}, IState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      board: boardData,
+      board: hardBoard,
       userPos: {
         x: 5,
         y: 5

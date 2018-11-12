@@ -5,10 +5,10 @@ import Cell from "./Cell/Cell";
 const Board = ({ boardData }: any): JSX.Element => {
   return (
     <StyledBoard>
-      {boardData.map((row: string[][], rowKey: number) => {
-        return row.map((cell: string[], cellKey: number) => {
+      {boardData.map((row: string[], rowKey: number) => {
+        return row.map((cell: string, cellKey: number) => {
           return (
-            <Cell key={`${rowKey}-${cellKey}`} cellType={cell[0]} size="60px" />
+            <Cell key={`${rowKey}-${cellKey}`} cellType={cell} size="60px" />
           );
         });
       })}
