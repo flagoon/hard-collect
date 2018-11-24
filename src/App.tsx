@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { hardBoard } from "./board-data";
+import {
+  IBoard,
+  IUserPos,
+  populateBoard,
+  userPosition
+} from "./assets/data/board";
 import Board from "./Board/Board";
 import Legend from "./Legend/Legend";
 
 interface IState {
-  userPos: {
-    x: number;
-    y: number;
-  };
-  board: string[][];
+  userPos: IUserPos;
+  board: IBoard;
 }
 
 class App extends Component<{}, IState> {
@@ -17,16 +19,15 @@ class App extends Component<{}, IState> {
 
   constructor(props: {}) {
     super(props);
+    const board = populateBoard(10);
     this.state = {
-      board: hardBoard,
-      userPos: {
-        x: 5,
-        y: 5
-      }
+      board,
+      userPos: userPosition
     };
   }
 
   public render() {
+    const { userPos, board } = this.state;
     return (
       <div
         onKeyDown={this.onKeyDownHandler}
@@ -35,7 +36,7 @@ class App extends Component<{}, IState> {
         style={{ outline: "none", height: "100vh" }}
       >
         <MainContainer>
-          <Board boardData={this.state.board} />
+          <Board boardData={board} />
           <Legend />
         </MainContainer>
       </div>

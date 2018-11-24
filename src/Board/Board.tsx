@@ -1,8 +1,13 @@
 import * as React from "react";
 import styled from "styled-components";
+import { IBoard, IUserPos } from "../assets/data/board";
 import Cell from "./Cell/Cell";
 
-const Board = ({ boardData }: any): JSX.Element => {
+interface IProps {
+  boardData: IBoard;
+}
+
+const Board = ({ boardData }: IProps): JSX.Element => {
   return (
     <StyledBoard>
       {boardData.map((row: string[], rowKey: number) => {
