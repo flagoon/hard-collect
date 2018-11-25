@@ -9,29 +9,29 @@ interface IProps {
 
 class Cell extends React.PureComponent<IProps> {
   public render(): React.ReactNode {
-    const { cellType, size = "60px" } = this.props;
+    const { cellType, size } = this.props;
     switch (cellType) {
       case "trap":
         return (
-          <CellContainer>
+          <CellContainer size={size}>
             <Trap size={size} />
           </CellContainer>
         );
       case "user":
         return (
-          <CellContainer>
+          <CellContainer size={size}>
             <User size={size} />
           </CellContainer>
         );
       case "death":
         return (
-          <CellContainer>
+          <CellContainer size={size}>
             <Death size={size} />
           </CellContainer>
         );
       case "candy":
         return (
-          <CellContainer>
+          <CellContainer size={size}>
             <Candy size={size} />
           </CellContainer>
         );

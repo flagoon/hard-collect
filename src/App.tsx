@@ -19,7 +19,7 @@ class App extends Component<{}, IState> {
 
   constructor(props: {}) {
     super(props);
-    const board = populateBoard(10);
+    const board = populateBoard(8, 10);
     this.state = {
       board,
       userPos: userPosition
@@ -27,7 +27,7 @@ class App extends Component<{}, IState> {
   }
 
   public render() {
-    const { userPos, board } = this.state;
+    const { board } = this.state;
     return (
       <div
         onKeyDown={this.onKeyDownHandler}
@@ -48,9 +48,28 @@ class App extends Component<{}, IState> {
   }
 
   public onKeyDownHandler = (e: React.KeyboardEvent) => {
-    if (e.key !== "F12") {
+    const validKeys = ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"];
+    const { userPos, board } = this.state;
+    const boardWidth: number = board[0].length - 1;
+    const boardHeight: number = board.length - 1;
+    const newBoard = [...board];
+    const nextUserPos: IUserPos = { ...userPos };
+    if (validKeys.includes(e.key)) {
       e.preventDefault();
-      console.log(e.key); // tslint:disable-line
+      newBoard[userPos.posx][userPos.posy] = "empty";
+      if (e.key === "ArrowRight" && userPos.posy < boardWidth) {
+        nextUserPos.posy += 1;
+      } else if (e.key === "ArrowLeft" && userPos.posy > 0) {
+        nextUserPos.posy -= 1;
+      } else if (e.key === "ArrowUp" && userPos.posx > 0) {
+        nextUserPos.posx -= 1;
+      } else if (e.key === "ArrowDown" && userPos.posx < boardHeight) {
+        nextUserPos.posx += 1;
+      }
+      // TODO: handle trap/death
+      newBoard[nextUserPos.posx][nextUserPos.posy] = "user";
+      this.setState({ board: newBoard });
+      this.setState({ userPos: nextUserPos });
     }
   };
 }

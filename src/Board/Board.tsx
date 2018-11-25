@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { IBoard, IUserPos } from "../assets/data/board";
+import { IBoard } from "../assets/data/board";
 import Cell from "./Cell/Cell";
 
 interface IProps {
@@ -13,7 +13,11 @@ const Board = ({ boardData }: IProps): JSX.Element => {
       {boardData.map((row: string[], rowKey: number) => {
         return row.map((cell: string, cellKey: number) => {
           return (
-            <Cell key={`${rowKey}-${cellKey}`} cellType={cell} size="60px" />
+            <Cell
+              key={`${rowKey}-${cellKey}`}
+              cellType={cell}
+              size={`${700 / boardData[0].length}px`}
+            />
           );
         });
       })}

@@ -26,7 +26,7 @@ const Candy: React.SFC<ICellProps> = props => {
 };
 
 const EmptyCell: React.SFC<ICellProps> = props => {
-  return <CellContainer />;
+  return <CellContainer size={props.size} />;
 };
 
 export { Trap, Death, User, Candy, EmptyCell };
