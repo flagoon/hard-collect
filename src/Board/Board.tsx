@@ -1,20 +1,22 @@
 import * as React from "react";
 import styled from "styled-components";
-import boardData from "../board-data";
+import { IBoard } from "../assets/data/board";
 import Cell from "./Cell/Cell";
 
-const Board = (): JSX.Element => {
+interface IProps {
+  boardData: IBoard;
+}
+
+const Board = ({ boardData }: IProps): JSX.Element => {
   return (
     <StyledBoard>
-      {boardData.map((row: string[][], rowKey: number) => {
-        return row.map((cell: string[], cellKey: number) => {
+      {boardData.map((row: string[], rowKey: number) => {
+        return row.map((cell: string, cellKey: number) => {
           return (
             <Cell
               key={`${rowKey}-${cellKey}`}
-              isTrap={cell.includes("trap")}
-              isUser={cell.includes("user")}
-              isCandy={cell.includes("candy")}
-              isDeath={cell.includes("death")}
+              cellType={cell}
+              size={`${700 / boardData[0].length}px`}
             />
           );
         });

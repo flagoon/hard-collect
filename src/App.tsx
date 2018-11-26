@@ -1,56 +1,85 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import {
+  IBoard,
+  IUserPos,
+  populateBoard,
+  userPosition
+} from "./assets/data/board";
 import Board from "./Board/Board";
 import Legend from "./Legend/Legend";
 
-class App extends Component {
+interface IState {
+  userPos: IUserPos;
+  board: IBoard;
+}
+
+class App extends Component<{}, IState> {
+  private boardRef = React.createRef<HTMLDivElement>();
+
+  constructor(props: {}) {
+    super(props);
+    const board = populateBoard(8, 10);
+    this.state = {
+      board,
+      userPos: userPosition
+    };
+  }
+
   public render() {
+    const { board } = this.state;
     return (
-      <React.Fragment>
+      <div
+        onKeyDown={this.onKeyDownHandler}
+        tabIndex={0}
+        ref={this.boardRef}
+        style={{ outline: "none", height: "100vh" }}
+      >
         <MainContainer>
-          <Board />
+          <Board boardData={board} />
           <Legend />
         </MainContainer>
-        <IconFooter>
-          <div>
-            Icons made by{" "}
-            <a
-              href="https://www.flaticon.com/authors/pixel-buddha"
-              title="Pixel Buddha"
-            >
-              Pixel Buddha
-            </a>{" "}
-            from{" "}
-            <a href="https://www.flaticon.com/" title="Flaticon">
-              www.flaticon.com
-            </a>{" "}
-            is licensed by{" "}
-            <a
-              href="http://creativecommons.org/licenses/by/3.0/"
-              title="Creative Commons BY 3.0"
-              target="_blank"
-            >
-              CC 3.0 BY
-            </a>
-          </div>
-        </IconFooter>
-      </React.Fragment>
+      </div>
     );
   }
+
+  public componentDidMount() {
+    this.boardRef.current!.focus();
+  }
+
+  public onKeyDownHandler = (e: React.KeyboardEvent) => {
+    const validKeys = ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"];
+    const { userPos, board } = this.state;
+    const boardWidth: number = board[0].length - 1;
+    const boardHeight: number = board.length - 1;
+    const newBoard = [...board];
+    const nextUserPos: IUserPos = { ...userPos };
+    if (validKeys.includes(e.key)) {
+      e.preventDefault();
+      newBoard[userPos.posx][userPos.posy] = "empty";
+      if (e.key === "ArrowRight" && userPos.posy < boardWidth) {
+        nextUserPos.posy += 1;
+      } else if (e.key === "ArrowLeft" && userPos.posy > 0) {
+        nextUserPos.posy -= 1;
+      } else if (e.key === "ArrowUp" && userPos.posx > 0) {
+        nextUserPos.posx -= 1;
+      } else if (e.key === "ArrowDown" && userPos.posx < boardHeight) {
+        nextUserPos.posx += 1;
+      }
+      // TODO: handle trap/death
+      newBoard[nextUserPos.posx][nextUserPos.posy] = "user";
+      this.setState({ board: newBoard });
+      this.setState({ userPos: nextUserPos });
+    }
+  };
 }
 
 const MainContainer = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const IconFooter = styled.div`
-  border: 1px solid red;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  bottom: 1rem;
+  div:focus {
+    border: none;
+  }
 `;
 
 export default App;

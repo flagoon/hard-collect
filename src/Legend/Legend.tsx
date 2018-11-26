@@ -1,12 +1,24 @@
 import * as React from "react";
 import styled from "styled-components";
-import Candy from "./Candy/Candy";
+import { Candy, Death, Trap, User } from "../Board/Cell/Cells";
 
 const Legend = () => {
   return (
     <LegendContainer>
       <LegendItem>
-        <Candy />
+        <User size="24px" />
+        <span>User</span>
+      </LegendItem>
+      <LegendItem>
+        <Trap size="24px" />
+        <span>Trap</span>
+      </LegendItem>
+      <LegendItem>
+        <Candy size="24px" />
+        <span>Candy</span>
+      </LegendItem>
+      <LegendItem>
+        <Death size="24px" />
         <span>Death</span>
       </LegendItem>
     </LegendContainer>
@@ -23,6 +35,10 @@ const LegendContainer = styled.div`
 const LegendItem = styled.div`
   display: flex;
   align-items: center;
+
+  span {
+    margin: 10px;
+  }
 `;
 
 export default Legend;
