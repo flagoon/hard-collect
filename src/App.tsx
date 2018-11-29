@@ -23,7 +23,7 @@ class App extends Component<{}, IState> {
 
   constructor(props: {}) {
     super(props);
-    const board = populateBoard(8, 10);
+    const board = populateBoard(10, 10);
     this.state = {
       board,
       isDead: false,
@@ -43,10 +43,10 @@ class App extends Component<{}, IState> {
       >
         <ScoreBoard score={score} />
         {isDead ? (
-          <MainContainer>
-            <DeadModal>You're dead!</DeadModal>
+          <DeadModal>
+            <DeadMessage>You're dead!</DeadMessage>
             <ResetButton onClick={this.resetBoard} />
-          </MainContainer>
+          </DeadModal>
         ) : (
           <MainContainer>
             <Board boardData={board} onKeyDown={this.onKeyDownHandler} />
@@ -58,7 +58,7 @@ class App extends Component<{}, IState> {
   }
 
   public resetBoard() {
-    const resetBoard = populateBoard(8, 10);
+    const resetBoard = populateBoard(10, 10);
     this.setState({
       board: resetBoard,
       isDead: false,
@@ -116,7 +116,15 @@ const MainContainer = styled.div`
 `;
 
 const DeadModal = styled.div`
+  display: flex;
+  width: 100vw;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const DeadMessage = styled.div`
   background-color: red;
+  border-radius: 5px;
   color: white;
   font-size: 3rem;
   font-weight: 900;

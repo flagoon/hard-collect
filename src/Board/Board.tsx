@@ -5,7 +5,7 @@ import Cell from "./Cell/Cell";
 
 interface IProps {
   boardData: IBoard;
-  onKeyDown: (e: any) => void;
+  onKeyDown: (event: any) => void;
 }
 
 class Board extends React.PureComponent<IProps, {}> {
