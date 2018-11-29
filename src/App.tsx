@@ -7,6 +7,7 @@ import {
   userPosition
 } from "./assets/data/board";
 import Board from "./Board/Board";
+import ResetButton from "./Board/ResetButton";
 import ScoreBoard from "./Board/ScoreBoard";
 import Legend from "./Legend/Legend";
 
@@ -29,13 +30,13 @@ class App extends Component<{}, IState> {
       score: 0,
       userPos: userPosition
     };
+    this.resetBoard = this.resetBoard.bind(this);
   }
 
   public render() {
     const { board, isDead, score } = this.state;
     return (
       <div
-        onKeyDown={this.onKeyDownHandler}
         tabIndex={0}
         ref={this.boardRef}
         style={{ outline: "none", height: "100vh" }}
@@ -43,16 +44,27 @@ class App extends Component<{}, IState> {
         <ScoreBoard score={score} />
         {isDead ? (
           <MainContainer>
-            <DeadModal>dead</DeadModal>
+            <DeadModal>You're dead!</DeadModal>
+            <ResetButton onClick={this.resetBoard} />
           </MainContainer>
         ) : (
           <MainContainer>
-            <Board boardData={board} />
+            <Board boardData={board} onKeyDown={this.onKeyDownHandler} />
             <Legend />
           </MainContainer>
         )}
       </div>
     );
+  }
+
+  public resetBoard() {
+    const resetBoard = populateBoard(8, 10);
+    this.setState({
+      board: resetBoard,
+      isDead: false,
+      score: 0,
+      userPos: userPosition
+    });
   }
 
   public componentDidMount() {
@@ -90,8 +102,7 @@ class App extends Component<{}, IState> {
       }
 
       newBoard[nextUserPos.posx][nextUserPos.posy] = "user";
-      this.setState({ board: newBoard });
-      this.setState({ userPos: nextUserPos });
+      this.setState({ board: newBoard, userPos: nextUserPos });
     }
   };
 }
@@ -105,7 +116,7 @@ const MainContainer = styled.div`
 `;
 
 const DeadModal = styled.div`
-  background-color: thistle;
+  background-color: red;
   color: white;
   font-size: 3rem;
   font-weight: 900;

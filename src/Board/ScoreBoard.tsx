@@ -5,7 +5,7 @@ interface IProps {
   score: number;
 }
 
-const ScoreBoard = ({ score }: IProps) => {
+const ScoreBoard = ({ score }: IProps): JSX.Element => {
   return <Score>Score: {score}</Score>;
 };
 
