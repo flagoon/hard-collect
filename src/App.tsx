@@ -15,6 +15,7 @@ interface IState {
   userPos: IUserPos;
   board: IBoard;
   isDead: boolean;
+  isWin: boolean;
   score: number;
 }
 
@@ -27,6 +28,7 @@ class App extends Component<{}, IState> {
     this.state = {
       board,
       isDead: false,
+      isWin: false,
       score: 0,
       userPos: userPosition
     };
@@ -34,9 +36,9 @@ class App extends Component<{}, IState> {
   }
 
   public render() {
-    const { board, isDead, score } = this.state;
+    const { board, isDead, isWin, score } = this.state;
     return (
-      <div
+      <div>
         tabIndex={0}
         ref={this.boardRef}
         style={{ outline: "none", height: "100vh" }}
@@ -49,8 +51,17 @@ class App extends Component<{}, IState> {
           </DeadModal>
         ) : (
           <MainContainer>
-            <Board boardData={board} onKeyDown={this.onKeyDownHandler} />
-            <Legend />
+            {isWin ? (
+              <div>
+                <DeadMessage>You've won!!</DeadMessage>
+                <ResetButton onClick={this.resetBoard} />
+              </div>
+            ) : (
+              <MainContainer>
+                <Board boardData={board} onKeyDown={this.onKeyDownHandler} />
+                <Legend />
+              </MainContainer>
+            )}
           </MainContainer>
         )}
       </div>
@@ -62,6 +73,7 @@ class App extends Component<{}, IState> {
     this.setState({
       board: resetBoard,
       isDead: false,
+      isWin: false,
       score: 0,
       userPos: userPosition
     });
@@ -103,6 +115,17 @@ class App extends Component<{}, IState> {
 
       newBoard[nextUserPos.posx][nextUserPos.posy] = "user";
       this.setState({ board: newBoard, userPos: nextUserPos });
+
+      let candyCounter: number = 0;
+      board.map((row: string[]) => {
+        if (row.includes("candy")) {
+          candyCounter++;
+        }
+      });
+
+      if (candyCounter === 0) {
+        this.setState({ isWin: true });
+      }
     }
   };
 }
@@ -110,9 +133,6 @@ class App extends Component<{}, IState> {
 const MainContainer = styled.div`
   display: flex;
   justify-content: center;
-  div:focus {
-    border: none;
-  }
 `;
 
 const DeadModal = styled.div`
