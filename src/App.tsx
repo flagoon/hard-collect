@@ -20,8 +20,6 @@ interface IState {
 }
 
 class App extends Component<{}, IState> {
-  private boardRef = React.createRef<HTMLDivElement>();
-
   constructor(props: {}) {
     super(props);
     const board = populateBoard(10, 10);
@@ -39,10 +37,6 @@ class App extends Component<{}, IState> {
     const { board, isDead, isWin, score } = this.state;
     return (
       <div>
-        tabIndex={0}
-        ref={this.boardRef}
-        style={{ outline: "none", height: "100vh" }}
-      >
         <ScoreBoard score={score} />
         {isDead ? (
           <DeadModal>
@@ -77,10 +71,6 @@ class App extends Component<{}, IState> {
       score: 0,
       userPos: userPosition
     });
-  }
-
-  public componentDidMount() {
-    this.boardRef.current!.focus();
   }
 
   public onKeyDownHandler = (e: React.KeyboardEvent) => {
