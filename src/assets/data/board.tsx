@@ -24,7 +24,7 @@ const generateFields = (board: IBoard) => (cellName: string) => {
   switch (cellName) {
     case "trap":
     case "death":
-      numberOfCells = Math.ceil((board[0].length * board.length) / 5);
+      numberOfCells = Math.ceil((board[0].length * board.length) / 15);
       break;
     case "candy":
       numberOfCells = Math.ceil((board[0].length * board.length) / 5);
