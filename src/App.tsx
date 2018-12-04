@@ -6,10 +6,9 @@ import {
   populateBoard,
   userPosition
 } from "./assets/data/board";
-import Board from "./Board/Board";
-import ResetButton from "./Board/ResetButton";
-import ScoreBoard from "./Board/ScoreBoard";
-import Legend from "./Legend/Legend";
+import GameBoard from "./Components/Board/GameBoard";
+import ScoreBoard from "./Components/Board/ScoreBoard";
+import Screen from "./Components/Screens/Screens";
 
 interface IState {
   userPos: IUserPos;
@@ -39,22 +38,15 @@ class App extends Component<{}, IState> {
       <div>
         <ScoreBoard score={score} />
         {isDead ? (
-          <DeadModal>
-            <DeadMessage>You're dead!</DeadMessage>
-            <ResetButton onClick={this.resetBoard} />
-          </DeadModal>
+          <MainContainer>
+            <Screen score={score} onClick={this.resetBoard} type="death" />
+          </MainContainer>
         ) : (
           <MainContainer>
             {isWin ? (
-              <div>
-                <DeadMessage>You've won!!</DeadMessage>
-                <ResetButton onClick={this.resetBoard} />
-              </div>
+              <Screen score={score} onClick={this.resetBoard} type="win" />
             ) : (
-              <MainContainer>
-                <Board boardData={board} onKeyDown={this.onKeyDownHandler} />
-                <Legend />
-              </MainContainer>
+              <GameBoard boardData={board} onKeyDown={this.onKeyDownHandler} />
             )}
           </MainContainer>
         )}
