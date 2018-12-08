@@ -7,7 +7,6 @@ import {
   userPosition
 } from "./assets/data/board";
 import GameBoard from "./Components/Board/GameBoard";
-import ScoreBoard from "./Components/Board/ScoreBoard";
 import Screen from "./Components/Screens/Screens";
 
 interface IState {
@@ -36,7 +35,6 @@ class App extends Component<{}, IState> {
     const { board, isDead, isWin, score } = this.state;
     return (
       <div>
-        <ScoreBoard score={score} />
         {isDead ? (
           <MainContainer>
             <Screen score={score} onClick={this.resetBoard} type="death" />
@@ -46,7 +44,11 @@ class App extends Component<{}, IState> {
             {isWin ? (
               <Screen score={score} onClick={this.resetBoard} type="win" />
             ) : (
-              <GameBoard boardData={board} onKeyDown={this.onKeyDownHandler} />
+              <GameBoard
+                boardData={board}
+                onKeyDown={this.onKeyDownHandler}
+                score={score}
+              />
             )}
           </MainContainer>
         )}
@@ -115,22 +117,6 @@ class App extends Component<{}, IState> {
 const MainContainer = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const DeadModal = styled.div`
-  display: flex;
-  width: 100vw;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const DeadMessage = styled.div`
-  background-color: red;
-  border-radius: 5px;
-  color: white;
-  font-size: 3rem;
-  font-weight: 900;
-  padding: 0.5rem;
 `;
 
 export default App;
