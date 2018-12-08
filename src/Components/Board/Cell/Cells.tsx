@@ -3,14 +3,15 @@ import { ReactComponent as CandyIcon } from "../../../assets/Icons/candy.svg";
 import { ReactComponent as DeathIcon } from "../../../assets/Icons/death.svg";
 import { ReactComponent as TrapIcon } from "../../../assets/Icons/trap.svg";
 import { ReactComponent as UserIcon } from "../../../assets/Icons/user.svg";
-import CellContainer from "./CellContainer";
+import { CellContainer } from "./CellContainer";
 
 interface ICellProps {
   size: string;
+  opacity?: string;
 }
 
 const Trap: React.SFC<ICellProps> = props => {
-  return <TrapIcon width={props.size} />;
+  return <TrapIcon width={props.size} opacity={props.opacity} />;
 };
 
 const Death: React.SFC<ICellProps> = props => {

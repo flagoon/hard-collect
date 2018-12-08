@@ -9,14 +9,15 @@ interface IProps {
   boardData: IBoard;
   onKeyDown: (event: any) => void;
   score: number;
+  opacity: string;
 }
 
-const GameBoard = ({ boardData, onKeyDown, score }: IProps) => {
+const GameBoard = ({ boardData, onKeyDown, score, opacity }: IProps) => {
   return (
     <MegaContainer>
       <ScoreBoard score={score} />
       <BoardContainer>
-        <Board boardData={boardData} onKeyDown={onKeyDown} />
+        <Board boardData={boardData} onKeyDown={onKeyDown} opacity={opacity} />
         <Legend />
       </BoardContainer>
     </MegaContainer>

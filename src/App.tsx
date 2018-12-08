@@ -17,6 +17,7 @@ interface IState {
   isWin: boolean;
   score: number;
   validKeys: string[];
+  opacity: string;
 }
 
 class App extends Component<{}, IState> {
@@ -27,6 +28,7 @@ class App extends Component<{}, IState> {
       board,
       isDead: false,
       isWin: false,
+      opacity: "1",
       score: 0,
       userPos: userPosition,
       validKeys: ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"]
@@ -35,7 +37,7 @@ class App extends Component<{}, IState> {
   }
 
   public render() {
-    const { board, isDead, isWin, score } = this.state;
+    const { board, isDead, isWin, score, opacity } = this.state;
     return (
       <div>
         {isDead ? (
@@ -50,6 +52,7 @@ class App extends Component<{}, IState> {
               <GameBoard
                 boardData={board}
                 onKeyDown={this.onKeyDownHandler}
+                opacity={opacity}
                 score={score}
               />
             )}
@@ -80,7 +83,7 @@ class App extends Component<{}, IState> {
     if (validKeys.includes(e.key)) {
       e.preventDefault();
       newBoard[userPos.posx][userPos.posy] = "empty";
-
+      this.setState({ opacity: "0" });
       if (e.key === validKeys[0] && userPos.posy < boardWidth) {
         nextUserPos.posy += 1;
       } else if (e.key === validKeys[1] && userPos.posy > 0) {
@@ -94,12 +97,16 @@ class App extends Component<{}, IState> {
       const nextMove = newBoard[nextUserPos.posx][nextUserPos.posy];
 
       if (nextMove === "death") {
-        this.setState({ isDead: true });
+        this.setState({
+          isDead: true,
+          opacity: "1",
+          validKeys: ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"]
+        });
       } else if (nextMove === "candy") {
         this.setState({ score: this.state.score + 1 });
       } else if (nextMove === "trap") {
         const shuffledArray: string[] = shuffleArray(this.state.validKeys);
-        this.setState({ validKeys: [...shuffledArray] });
+        this.setState({ opacity: "1", validKeys: [...shuffledArray] });
       }
 
       newBoard[nextUserPos.posx][nextUserPos.posy] = "user";
@@ -113,7 +120,11 @@ class App extends Component<{}, IState> {
       });
 
       if (candyCounter === 0) {
-        this.setState({ isWin: true });
+        this.setState({
+          isWin: true,
+          opacity: "1",
+          validKeys: ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"]
+        });
       }
     }
   };

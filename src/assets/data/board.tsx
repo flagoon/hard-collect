@@ -23,6 +23,8 @@ const generateFields = (board: IBoard) => (cellName: string) => {
   let isUser: boolean = false;
   switch (cellName) {
     case "trap":
+      numberOfCells = Math.ceil((board[0].length * board.length) / 10);
+      break;
     case "death":
       numberOfCells = Math.ceil((board[0].length * board.length) / 15);
       break;

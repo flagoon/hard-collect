@@ -4,7 +4,7 @@ interface ICellContainer {
   size: string;
 }
 
-const CellContainer = styled.div`
+export const CellContainer = styled.div`
   box-sizing: border-box;
   display: flex;
   align-content: center;
@@ -14,5 +14,3 @@ const CellContainer = styled.div`
   height: ${(p: ICellContainer) => p.size};
   padding: 5px;
 `;
-
-export default CellContainer;
