@@ -8,6 +8,7 @@ import {
 } from "./assets/data/board";
 import GameBoard from "./Components/Board/GameBoard";
 import Screen from "./Components/Screens/Screens";
+import { shuffleArray } from "./helpers/arrayHelper";
 
 interface IState {
   userPos: IUserPos;
@@ -15,6 +16,7 @@ interface IState {
   isDead: boolean;
   isWin: boolean;
   score: number;
+  validKeys: string[];
 }
 
 class App extends Component<{}, IState> {
@@ -26,7 +28,8 @@ class App extends Component<{}, IState> {
       isDead: false,
       isWin: false,
       score: 0,
-      userPos: userPosition
+      userPos: userPosition,
+      validKeys: ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"]
     };
     this.resetBoard = this.resetBoard.bind(this);
   }
@@ -68,8 +71,7 @@ class App extends Component<{}, IState> {
   }
 
   public onKeyDownHandler = (e: React.KeyboardEvent) => {
-    const validKeys = ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"];
-    const { userPos, board } = this.state;
+    const { userPos, board, validKeys } = this.state;
     const boardWidth: number = board[0].length - 1;
     const boardHeight: number = board.length - 1;
     const newBoard = [...board];
@@ -78,23 +80,26 @@ class App extends Component<{}, IState> {
     if (validKeys.includes(e.key)) {
       e.preventDefault();
       newBoard[userPos.posx][userPos.posy] = "empty";
-      if (e.key === "ArrowRight" && userPos.posy < boardWidth) {
+
+      if (e.key === validKeys[0] && userPos.posy < boardWidth) {
         nextUserPos.posy += 1;
-      } else if (e.key === "ArrowLeft" && userPos.posy > 0) {
+      } else if (e.key === validKeys[1] && userPos.posy > 0) {
         nextUserPos.posy -= 1;
-      } else if (e.key === "ArrowUp" && userPos.posx > 0) {
+      } else if (e.key === validKeys[3] && userPos.posx > 0) {
         nextUserPos.posx -= 1;
-      } else if (e.key === "ArrowDown" && userPos.posx < boardHeight) {
+      } else if (e.key === validKeys[2] && userPos.posx < boardHeight) {
         nextUserPos.posx += 1;
       }
 
       const nextMove = newBoard[nextUserPos.posx][nextUserPos.posy];
+
       if (nextMove === "death") {
         this.setState({ isDead: true });
       } else if (nextMove === "candy") {
         this.setState({ score: this.state.score + 1 });
       } else if (nextMove === "trap") {
-        // TODO: It's a Trap
+        const shuffledArray: string[] = shuffleArray(this.state.validKeys);
+        this.setState({ validKeys: [...shuffledArray] });
       }
 
       newBoard[nextUserPos.posx][nextUserPos.posy] = "user";
