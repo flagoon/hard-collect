@@ -7,6 +7,7 @@ import {
   userPosition
 } from "./assets/data/board";
 import GameBoard from "./Components/Board/GameBoard";
+import { ScoreConsumer } from "./Components/Context/ScoreContext";
 import Screen from "./Components/Screens/Screens";
 import { shuffleArray } from "./helpers/arrayHelper";
 
@@ -15,7 +16,6 @@ interface IState {
   board: IBoard;
   isDead: boolean;
   isWin: boolean;
-  score: number;
   validKeys: string[];
   opacity: string;
 }
@@ -29,7 +29,6 @@ class App extends Component<{}, IState> {
       isDead: false,
       isWin: false,
       opacity: "1",
-      score: 0,
       userPos: userPosition,
       validKeys: ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"]
     };
@@ -37,23 +36,22 @@ class App extends Component<{}, IState> {
   }
 
   public render() {
-    const { board, isDead, isWin, score, opacity } = this.state;
+    const { board, isDead, isWin, opacity } = this.state;
     return (
       <div>
         {isDead ? (
           <MainContainer>
-            <Screen score={score} onClick={this.resetBoard} type="death" />
+            <Screen onClick={this.resetBoard} type="death" />
           </MainContainer>
         ) : (
           <MainContainer>
             {isWin ? (
-              <Screen score={score} onClick={this.resetBoard} type="win" />
+              <Screen onClick={this.resetBoard} type="win" />
             ) : (
               <GameBoard
                 boardData={board}
                 onKeyDown={this.onKeyDownHandler}
                 opacity={opacity}
-                score={score}
               />
             )}
           </MainContainer>
@@ -68,7 +66,6 @@ class App extends Component<{}, IState> {
       board: resetBoard,
       isDead: false,
       isWin: false,
-      score: 0,
       userPos: userPosition
     });
   }

@@ -1,12 +1,11 @@
 import * as React from "react";
 import styled from "styled-components";
+import { ScoreConsumer } from "../Context/ScoreContext";
 
-interface IProps {
-  score: number;
-}
-
-export const Points = ({ score }: IProps) => (
-  <PointsContainer>You've got {score} points!</PointsContainer>
+export const Points = () => (
+  <ScoreConsumer>
+    {score => <PointsContainer>You've got {score} points!</PointsContainer>}
+  </ScoreConsumer>
 );
 
 const PointsContainer = styled.div`

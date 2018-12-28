@@ -6,14 +6,13 @@ import { Points } from "../BoardElements/Points";
 
 interface IScreen {
   onClick: () => void;
-  score: number;
   type: string;
 }
 
-const Screen = ({ score, onClick, type }: IScreen) => {
+const Screen = ({ onClick, type }: IScreen) => {
   return (
     <MainContainer>
-      <Points score={score} />
+      <Points />
       {type === "death" ? <Death size={"200px"} /> : <Candy size={"200px"} />}
 
       <ResetButton onClick={onClick} />

@@ -8,14 +8,13 @@ import ScoreBoard from "./ScoreBoard";
 interface IProps {
   boardData: IBoard;
   onKeyDown: (event: any) => void;
-  score: number;
   opacity: string;
 }
 
-const GameBoard = ({ boardData, onKeyDown, score, opacity }: IProps) => {
+const GameBoard = ({ boardData, onKeyDown, opacity }: IProps) => {
   return (
     <MegaContainer>
-      <ScoreBoard score={score} />
+      <ScoreBoard />
       <BoardContainer>
         <Board boardData={boardData} onKeyDown={onKeyDown} opacity={opacity} />
         <Legend />
