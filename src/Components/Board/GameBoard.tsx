@@ -7,7 +7,7 @@ import ScoreBoard from "./ScoreBoard";
 
 interface IProps {
   boardData: IBoard;
-  onKeyDown: (event: any) => void;
+  onKeyDown: (event: React.KeyboardEvent) => void;
   opacity: string;
 }
 

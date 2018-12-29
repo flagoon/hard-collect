@@ -5,7 +5,7 @@ import { Candy, Death, EmptyCell, Trap, User } from "./Cells";
 interface IProps {
   cellType: string;
   size: string;
-  opacity: string;
+  opacity?: string;
 }
 
 class Cell extends React.PureComponent<IProps> {

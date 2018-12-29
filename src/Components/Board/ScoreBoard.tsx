@@ -4,7 +4,9 @@ import { ScoreConsumer } from "../Context/ScoreContext";
 
 const ScoreBoard = () => {
   return (
-    <ScoreConsumer>{score => <Score>Score: {score}</Score>}</ScoreConsumer>
+    <ScoreConsumer>
+      {({ score }) => <Score>Score: {score}</Score>}
+    </ScoreConsumer>
   );
 };
 

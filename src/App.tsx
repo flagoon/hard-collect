@@ -73,7 +73,7 @@ class App extends Component<IProps, IState> {
     });
   }
 
-  public onKeyDownHandler = (e: React.KeyboardEvent) => {
+  public onKeyDownHandler = (e: React.KeyboardEvent): void => {
     const { userPos, board, validKeys } = this.state;
     const boardWidth: number = board[0].length - 1;
     const boardHeight: number = board.length - 1;

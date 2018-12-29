@@ -4,7 +4,9 @@ import { ScoreConsumer } from "../Context/ScoreContext";
 
 export const Points = () => (
   <ScoreConsumer>
-    {score => <PointsContainer>You've got {score} points!</PointsContainer>}
+    {({ score }) => (
+      <PointsContainer>You've got {score} points!</PointsContainer>
+    )}
   </ScoreConsumer>
 );
 

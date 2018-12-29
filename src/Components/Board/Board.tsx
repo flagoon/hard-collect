@@ -13,17 +13,11 @@ interface IProps {
 
 class Board extends React.PureComponent<IProps, {}> {
   public componentDidMount() {
-    window.addEventListener(
-      "keydown",
-      this.props.onKeyDown(this.props.updateScore)
-    );
+    window.addEventListener("keydown", this.props.onKeyDown);
   }
 
   public componentWillUnmount() {
-    window.removeEventListener(
-      "keydown",
-      this.props.onKeyDown(this.props.updateScore)
-    );
+    window.removeEventListener("keydown", this.props.onKeyDown);
   }
 
   public render() {
@@ -65,11 +59,15 @@ interface IBoardWithConsumer {
   boardData: IBoard;
   opacity: string;
   updateScore: (option: string) => void;
+  onKeyDown: (event: React.KeyboardEvent) => void;
 }
 
 const BoardWithConsumer = ({
-  opacity,
-  boardData
+  opacity = "",
+  boardData = [[""]],
+  onKeyDown = () => {
+    console.log("dupa");
+  }
 }: Partial<IBoardWithConsumer>) => {
   return (
     <ScoreConsumer>
@@ -78,6 +76,7 @@ const BoardWithConsumer = ({
           opacity={opacity}
           boardData={boardData}
           updateScore={updateScore}
+          onKeyDown={onKeyDown}
         />
       )}
     </ScoreConsumer>
