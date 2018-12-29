@@ -1,21 +1,29 @@
 import * as React from "react";
 import styled from "styled-components";
 import { IBoard } from "../../assets/data/board";
+import { ScoreConsumer } from "../Context/ScoreContext";
 import Cell from "./Cell/Cell";
 
 interface IProps {
   boardData: IBoard;
   onKeyDown: (event: any) => void;
   opacity: string;
+  updateScore: (option: string) => void;
 }
 
 class Board extends React.PureComponent<IProps, {}> {
   public componentDidMount() {
-    window.addEventListener("keydown", this.props.onKeyDown);
+    window.addEventListener(
+      "keydown",
+      this.props.onKeyDown(this.props.updateScore)
+    );
   }
 
   public componentWillUnmount() {
-    window.removeEventListener("keydown", this.props.onKeyDown);
+    window.removeEventListener(
+      "keydown",
+      this.props.onKeyDown(this.props.updateScore)
+    );
   }
 
   public render() {
@@ -53,4 +61,27 @@ const StyledBoard = styled.div`
   width: 700px;
 `;
 
-export default Board;
+interface IBoardWithConsumer {
+  boardData: IBoard;
+  opacity: string;
+  updateScore: (option: string) => void;
+}
+
+const BoardWithConsumer = ({
+  opacity,
+  boardData
+}: Partial<IBoardWithConsumer>) => {
+  return (
+    <ScoreConsumer>
+      {({ updateScore }) => (
+        <Board
+          opacity={opacity}
+          boardData={boardData}
+          updateScore={updateScore}
+        />
+      )}
+    </ScoreConsumer>
+  );
+};
+
+export default BoardWithConsumer;

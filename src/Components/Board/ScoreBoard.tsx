@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { ScoreConsumer } from "../Context/ScoreContext";
 
-const ScoreBoard = (): JSX.Element => {
+const ScoreBoard = () => {
   return (
     <ScoreConsumer>{score => <Score>Score: {score}</Score>}</ScoreConsumer>
   );

@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { IBoard } from "../../assets/data/board";
 import Legend from "../Legend/Legend";
-import Board from "./Board";
+import BoardWithConsumer from "./Board";
 import ScoreBoard from "./ScoreBoard";
 
 interface IProps {
@@ -16,7 +16,11 @@ const GameBoard = ({ boardData, onKeyDown, opacity }: IProps) => {
     <MegaContainer>
       <ScoreBoard />
       <BoardContainer>
-        <Board boardData={boardData} onKeyDown={onKeyDown} opacity={opacity} />
+        <BoardWithConsumer
+          boardData={boardData}
+          onKeyDown={onKeyDown}
+          opacity={opacity}
+        />
         <Legend />
       </BoardContainer>
     </MegaContainer>

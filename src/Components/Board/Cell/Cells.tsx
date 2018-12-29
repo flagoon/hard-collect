@@ -7,7 +7,7 @@ import { CellContainer } from "./CellContainer";
 
 interface ICellProps {
   size: string;
-  opacity?: string;
+  opacity: string;
 }
 
 const Trap: React.SFC<ICellProps> = props => {

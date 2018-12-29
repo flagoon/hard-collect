@@ -1,14 +1,20 @@
 import * as React from "react";
 
-interface IScoreContext extends IState {
+export interface IScoreContext extends IState {
   updateScore: (option: string) => void;
+  score: number;
 }
 
 interface IState {
   score: number;
 }
 
-export const ScoreContext = React.createContext<IScoreContext | null>(null);
+export const ScoreContext = React.createContext<IScoreContext>({
+  score: 0,
+  updateScore: () => {
+    console.log("dupa");
+  }
+});
 
 export class ScoreProvider extends React.Component<{}, IState> {
   constructor(props: {}) {
@@ -19,8 +25,8 @@ export class ScoreProvider extends React.Component<{}, IState> {
     this.updateScore = this.updateScore.bind(this);
   }
 
-  public updateScore(tet: string) {
-    if (tet === "increase") {
+  public updateScore(option: string) {
+    if (option === "increase") {
       this.setState(prevState => ({ score: prevState.score + 1 }));
     } else {
       this.setState({ score: 0 });

@@ -7,7 +7,6 @@ import {
   userPosition
 } from "./assets/data/board";
 import GameBoard from "./Components/Board/GameBoard";
-import { ScoreConsumer } from "./Components/Context/ScoreContext";
 import Screen from "./Components/Screens/Screens";
 import { shuffleArray } from "./helpers/arrayHelper";
 
@@ -20,8 +19,12 @@ interface IState {
   opacity: string;
 }
 
-class App extends Component<{}, IState> {
-  constructor(props: {}) {
+interface IProps {
+  updateScore: (option: string) => void;
+}
+
+class App extends Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     const board = populateBoard(10, 10);
     this.state = {
@@ -100,7 +103,7 @@ class App extends Component<{}, IState> {
           validKeys: ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"]
         });
       } else if (nextMove === "candy") {
-        this.setState({ score: this.state.score + 1 });
+        this.props.updateScore("increase");
       } else if (nextMove === "trap") {
         const shuffledArray: string[] = shuffleArray(this.state.validKeys);
         this.setState({ opacity: "1", validKeys: [...shuffledArray] });

@@ -1,13 +1,19 @@
+/* tslint:disable */
 import "normalize.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { ScoreProvider } from "./Components/Context/ScoreContext";
+import {
+  ScoreConsumer,
+  ScoreProvider
+} from "./Components/Context/ScoreContext";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <ScoreProvider>
-    <App />
+    <ScoreConsumer>
+      {({ updateScore }) => <App updateScore={updateScore} />}
+    </ScoreConsumer>
   </ScoreProvider>,
   document.getElementById("root")
 );
