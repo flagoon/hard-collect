@@ -1,4 +1,5 @@
 import * as React from "react";
+import { INCREASE_SCORE, ZERO_SCORE } from "../Constants";
 
 export interface IScoreContext extends IState {
   updateScore: (option: string) => void;
@@ -26,9 +27,9 @@ export class ScoreProvider extends React.Component<{}, IState> {
   }
 
   public updateScore(option: string) {
-    if (option === "increase") {
+    if (option === INCREASE_SCORE) {
       this.setState(prevState => ({ score: prevState.score + 1 }));
-    } else {
+    } else if (option === ZERO_SCORE) {
       this.setState({ score: 0 });
     }
   }

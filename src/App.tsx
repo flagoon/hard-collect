@@ -7,6 +7,7 @@ import {
   userPosition
 } from "./assets/data/board";
 import GameBoard from "./Components/Board/GameBoard";
+import { INCREASE_SCORE, ZERO_SCORE } from "./Components/Constants";
 import Screen from "./Components/Screens/Screens";
 import { shuffleArray } from "./helpers/arrayHelper";
 
@@ -65,6 +66,7 @@ class App extends Component<IProps, IState> {
 
   public resetBoard() {
     const resetBoard = populateBoard(10, 10);
+    this.props.updateScore(ZERO_SCORE);
     this.setState({
       board: resetBoard,
       isDead: false,
@@ -103,7 +105,7 @@ class App extends Component<IProps, IState> {
           validKeys: ["ArrowRight", "ArrowLeft", "ArrowDown", "ArrowUp"]
         });
       } else if (nextMove === "candy") {
-        this.props.updateScore("increase");
+        this.props.updateScore(INCREASE_SCORE);
       } else if (nextMove === "trap") {
         const shuffledArray: string[] = shuffleArray(this.state.validKeys);
         this.setState({ opacity: "1", validKeys: [...shuffledArray] });
