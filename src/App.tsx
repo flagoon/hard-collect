@@ -20,12 +20,8 @@ interface IState {
   opacity: string;
 }
 
-interface IProps {
-  updateScore: (option: string) => void;
-}
-
-class App extends Component<IProps, IState> {
-  constructor(props: IProps) {
+class App extends Component<{}, IState> {
+  constructor(props: {}) {
     super(props);
     const board = populateBoard(10, 10);
     this.state = {

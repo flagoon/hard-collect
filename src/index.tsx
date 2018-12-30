@@ -11,9 +11,7 @@ import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <ScoreProvider>
-    <ScoreConsumer>
-      {({ updateScore }) => <App updateScore={updateScore} />}
-    </ScoreConsumer>
+    <App />
   </ScoreProvider>,
   document.getElementById("root")
 );
